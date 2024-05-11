@@ -2,7 +2,9 @@
 Handwritten digit classifier written in Java using the GPU for accelerated training and inference. Trained on the MNIST handwritten digit dataset (included in .csv format split into training and test data).
  - JCublas and JCuda libraries serve as interface with native Cublas and Cuda libraries (versions >=12.0 must be installed beforehand).
 
-By using the GPU, significant speedups over CPU-based training are achieved. 
+By using the GPU, significant speedups over CPU-based training are achieved.
+
+The main code for training/inference can be found in [nn/gpu/NN_GPU.java](https://github.com/Jazz-Coding/NeuralNetwork4J_CUDA/blob/master/src/main/java/com/jazz/nn/gpu/NN_GPU.java)
 
 ## Currently available ##
 **Layer Types**:
