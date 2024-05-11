@@ -20,15 +20,12 @@ public class NetworkSerializer {
     public void save(int[] networkDimensions, float[][][] networkWeights, float[][] networkBiases, String name){
         PackedNetwork packedNetwork = new PackedNetwork(networkDimensions, networkWeights, networkBiases);
 
-        System.out.println("Saving...");
         Path path = Paths.get(saveDirectory + "/" + (name.endsWith(".txt") ? name : (name + ".txt")));
         try {
             Files.writeString(path,packedNetwork.toString());
         } catch (IOException e){
             e.printStackTrace();
         }
-
-        System.out.println("Saved.");
     }
 
     /**

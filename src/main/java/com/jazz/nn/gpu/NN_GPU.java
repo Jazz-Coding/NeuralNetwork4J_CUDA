@@ -380,6 +380,9 @@ public class NN_GPU {
         loadDataset();
 
         log.info("Beginning training...");
+        float accuracy = evaluateOnTestData(batchSize);
+        log.debug("Accuracy (test):", accuracy + "%");
+
         for (int epoch = 1; epoch <= epochs; epoch++) {
             batchDataset(batchSize); // Split into mini-batches and load them onto the GPU.
             log.info("Epoch: " + epoch);
@@ -407,13 +410,13 @@ public class NN_GPU {
 
             // Evaluate on test set.
             if(testFrequency > 0 && (epoch%testFrequency==0)) {
-                float accuracy = evaluateOnTestData(batchSize);
+                accuracy = evaluateOnTestData(batchSize);
                 log.debug("Accuracy (test):", accuracy + "%");
             }
         }
 
         if(testFrequency <= 0){
-            float accuracy = evaluateOnTestData(batchSize);
+            accuracy = evaluateOnTestData(batchSize);
             log.debug("Accuracy (test):", accuracy + "%");
         }
     }
@@ -521,14 +524,13 @@ public class NN_GPU {
         Logger log = new Logger();
         NetworkSerializer networkSerializer = new NetworkSerializer("saved_networks");
 
-        networkDimensions = new int[]{784, 3000, 3000, 10}; // {input neurons, hidden1, hidden2..., output neurons}
+        networkDimensions = new int[]{784, 32, 10}; // {input neurons, hidden1, hidden2..., output neurons}
         PackedNetwork neuralNetwork = newRandomNetwork(networkDimensions, log);
-        //PackedNetwork neuralNetwork = networkSerializer.load("nano.txt");
-        testPerformance(neuralNetwork,32, 0.01F,log);
+        //PackedNetwork neuralNetwork = networkSerializer.load("tiny.txt");
 
-        //train(neuralNetwork,100,32,0.01F,5,log);
+        train(neuralNetwork,100,32,0.1F,1,log);
 
-        //saveNetworkToFile(networkSerializer,"nano.txt");
+        saveNetworkToFile(networkSerializer,"new_network.txt");
         cleanUp();
     }
 }
